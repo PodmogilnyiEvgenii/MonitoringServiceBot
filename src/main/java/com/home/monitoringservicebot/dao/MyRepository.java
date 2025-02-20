@@ -67,7 +67,7 @@ public class MyRepository {
     }
 
     @Transactional
-    public boolean deleteScheduledTaskById(String id) {
+    public boolean deleteScheduledTaskById(Integer id) {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("id", id);

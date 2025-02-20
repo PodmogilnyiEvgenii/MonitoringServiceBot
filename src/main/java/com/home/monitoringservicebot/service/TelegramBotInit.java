@@ -25,7 +25,10 @@ public class TelegramBotInit {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(bot);
-            bot.execute(new SetMyCommands(null, null, "ru"));
+            List<BotCommand> botCommandList = new ArrayList<>();
+            botCommandList.add(new BotCommand("/help","получить список команд"));
+
+            bot.execute(new SetMyCommands(botCommandList, null, "ru"));
 
         } catch (TelegramApiException e) {
             log.error(e.getMessage());

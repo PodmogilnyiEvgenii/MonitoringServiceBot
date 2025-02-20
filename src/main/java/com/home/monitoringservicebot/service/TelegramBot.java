@@ -111,7 +111,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public void removeTask(String chatId, String id) {
-        if (myRepository.deleteScheduledTaskById(id)) {
+        if (myRepository.deleteScheduledTaskById(Integer.parseInt(id))) {
             myScheduler.initScheduledTimeStamp();
             sendText(chatId, "OK");
         } else {

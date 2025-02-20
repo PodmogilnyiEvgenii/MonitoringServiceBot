@@ -18,7 +18,7 @@ public class SchedulerService {
     private MyScheduler myScheduler;
     private CheckIsAliveService checkIsAliveService;
 
-    @Scheduled(fixedRate = 5 * 60000, initialDelay = 60000)
+    @Scheduled(fixedRate = 5 * 60000, initialDelay = 20000)
     public void checkServices() {
         log.debug("Checking services...");
 
