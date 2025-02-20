@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +92,25 @@ public class MyRepository {
     }
 
     @Transactional
+    public boolean addCrash(String serviceName, String error) {
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("timestamp", new Timestamp(System.currentTimeMillis()));
+            params.put("service_name", serviceName);
+            params.put("error", error);
+
+            SqlParameterSource paramSource = new MapSqlParameterSource(params);
+            GeneratedKeyHolder holder = new GeneratedKeyHolder();
+
+            jdbc.update("INSERT INTO monitoring.crash (timestamp, service_name, error) values (:timestamp, :service_name, :error)", paramSource, holder);
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return false;
+    }
+
+    @Transactional
     public ServiceCrash getLastServiceCrash() {
         try {
             Map<String, Object> params = new HashMap<>();
@@ -100,7 +120,7 @@ public class MyRepository {
         }
         return null;
     }
-
+    @Transactional
     public List<ServiceCrash> get10LastServiceCrash() {
         try {
             Map<String, Object> params = new HashMap<>();

@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS monitoring.crash
 (
     id                      BIGSERIAL NOT NULL PRIMARY KEY,
     timestamp               TIMESTAMP,
-    service_name            VARCHAR(100)
+    service_name            VARCHAR(100),
+    error                   VARCHAR(1000)
 );
 
 CREATE TABLE IF NOT EXISTS monitoring.scheduler

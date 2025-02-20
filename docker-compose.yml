@@ -1,0 +1,37 @@
+services:
+  backend:
+    image: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      service-db:
+        condition: service_healthy
+    environment:
+      - TZ=Europe/Moscow
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/monitoring
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+  service-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "10132:5432"
+    volumes:
+      - ./infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d memes" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
+
+

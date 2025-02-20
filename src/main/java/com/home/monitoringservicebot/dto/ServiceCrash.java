@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import java.sql.Timestamp;
-import java.util.TimerTask;
 
 @AllArgsConstructor
 @Data
@@ -14,4 +13,5 @@ public class ServiceCrash {
     private long id;
     private Timestamp timestamp;
     private String serviceName;
+    private String error;
 }

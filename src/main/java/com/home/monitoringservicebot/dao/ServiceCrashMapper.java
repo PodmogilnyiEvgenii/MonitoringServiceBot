@@ -15,7 +15,8 @@ public class ServiceCrashMapper implements RowMapper<ServiceCrash> {
         long id = rs.getLong("id");
         Timestamp timestamp = rs.getTimestamp("timestamp");
         String serviceName = rs.getString("service_name");
+        String error = rs.getString("error");
 
-        return new ServiceCrash(id, timestamp, serviceName);
+        return new ServiceCrash(id, timestamp, serviceName, error);
     }
 }
